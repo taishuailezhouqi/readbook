@@ -11,8 +11,9 @@
 
     <!-- 指定打包方式 -->
     <packaging>jar</packaging>
-    <groupId>com.zq.framework.common</groupId>
-    <artifactId>readbook-common</artifactId>
+
+    <groupId>com.zq.framework.jackson</groupId>
+    <artifactId>readbook-jackson</artifactId>
     <name>${project.artifactId}</name>
 
     <properties>
@@ -22,27 +23,14 @@
     </properties>
 
     <dependencies>
-        <!-- 避免编写那些冗余的 Java 样板式代码，如 get、set 方法等 -->
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
+            <groupId>com.zq.framework.common</groupId>
+            <artifactId>readbook-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
-        <!-- Jackson -->
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
-        </dependency>
-
-        <!-- 解决 Jackson Java 8 新日期 API 的序列化问题 -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
     </dependencies>
-
 </project>
