@@ -1,0 +1,33 @@
+package com.zq.auth.controller;
+
+import com.zq.auth.pojo.vo.UserLoginReqVO;
+import com.zq.auth.service.UserService;
+import com.zq.framework.common.response.Response;
+import com.zq.framework.log.aspect.ApiOperationLog;
+import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+
+@RestController
+@RequestMapping("/user")
+@Slf4j
+public class UserController {
+
+    @Resource
+    private UserService userService;
+
+    /**
+     * 注册或登录
+     */
+    @PostMapping("/login")
+    @ApiOperationLog(description = "用户登录/注册")
+    public Response<String> loginAndRegister(@Validated @RequestBody UserLoginReqVO userLoginReqVO) {
+        return userService.loginAndRegister(userLoginReqVO);
+    }
+
+}

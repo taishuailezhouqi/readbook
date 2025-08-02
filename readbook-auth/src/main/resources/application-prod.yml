@@ -6,6 +6,3 @@ spring:
     username: root # 数据库用户名
     password: abc123 # 数据库密码
 
-mybatis:
-  # MyBatis xml 配置文件路径
-  mapper-locations: classpath:/mapper/**/*.xml
