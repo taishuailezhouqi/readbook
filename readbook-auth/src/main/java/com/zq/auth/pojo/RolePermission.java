@@ -4,43 +4,19 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-@TableName("t_user")
-public class User {
+@TableName("t_role_permission_rel")
+public class RolePermission {
 
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    private String readBookId;
+    private Long roleId;
 
-    private String password;
-
-    private String nickname;
-
-    private String avatar;
-
-    private Date birthday;
-
-    private String backgroundImg;
-
-    private String phone;
-
-    private Byte sex;
-
-    private Byte status;
-
-    private String introduction;
+    private Long permissionId;
 
     private LocalDateTime createTime;
 
@@ -50,6 +26,5 @@ public class User {
      * 逻辑删除(0：未删除 1：已删除)
      */
     @TableLogic
-    private int isDeleted;
-
+    private Integer isDeleted;
 }

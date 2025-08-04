@@ -4,6 +4,7 @@ import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.zq.auth.constant.RedisKeyConstants;
 import com.zq.auth.constant.RoleConstants;
@@ -17,7 +18,6 @@ import com.zq.auth.pojo.vo.UserLoginReqVO;
 import com.zq.auth.service.UserService;
 import com.zq.framework.common.response.Response;
 import com.zq.framework.common.util.JsonUtils;
-import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -44,7 +44,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public Response<String> loginAndRegister(UserLoginReqVO userLoginReqVO) {
         Integer type = userLoginReqVO.getType();
         LoginTypeEnum loginTypeEnum = LoginTypeEnum.valueOf(type);
-        Long userId = null;
+        Long userId;
         //验证码
         if (loginTypeEnum == VERIFICATION_CODE) {
             if (userLoginReqVO.getCode() == null) {
@@ -52,12 +52,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             }
             String key = RedisKeyConstants.buildVerificationCodeKey(userLoginReqVO.getPhone());
             String code = (String) redisTemplate.opsForValue().get(key);
-            if (code == null) {
-                return Response.fail("无效的验证码");
-            }
-            if (!code.equals(userLoginReqVO.getCode())) {
-                return Response.fail("验证码不正确");
-            }
+            Preconditions.checkArgument(code != null,"无效的验证码");
+            Preconditions.checkArgument(code.equals(userLoginReqVO.getCode()),"验证码不正确");
+
             //判断是否第一次登陆
             User user = userMapper.selectOne(new LambdaQueryWrapper<User>()
                     .eq(User::getPhone, userLoginReqVO.getPhone()));
@@ -82,13 +79,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
 
     public Long registerUser(String phone) {
-        // 获取全局自增的小哈书 ID
-        Long readbookId = redisTemplate.opsForValue().increment(RedisKeyConstants.READBOOK_ID_GENERATOR_KEY);
+        // 获取全局自增的readbook ID
+        Long readBookId = redisTemplate.opsForValue().increment(RedisKeyConstants.READBOOK_ID_GENERATOR_KEY);
 
         User user = User.builder()
                 .phone(phone)
-                .readBookId(String.valueOf(readbookId)) // 自动生成小红书号 ID
-                .nickname("红薯" + readbookId) // 自动生成昵称, 如：小红薯10000
+                .readBookId(String.valueOf(readBookId)) // 自动生成小红书号 ID
+                .nickname("红薯" + readBookId) // 自动生成昵称, 如：小红薯10000
                 .createTime(LocalDateTime.now())
                 .updateTime(LocalDateTime.now())
                 .build();
