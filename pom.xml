@@ -17,6 +17,7 @@
     <modules>
         <module>readbook-auth</module>
         <module>readbook-framework</module>
+        <module>readbook-gateway</module>
     </modules>
 
     <properties>
