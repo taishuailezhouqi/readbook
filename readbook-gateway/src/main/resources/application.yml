@@ -5,7 +5,7 @@ spring:
     gateway:
       routes:
         - id: auth
-          uri: lb://xiaohashu-auth
+          uri: lb://readbook-auth
           predicates:
             - Path=/auth/**
           filters:
