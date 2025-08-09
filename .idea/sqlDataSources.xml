@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DdlMappings">
+    <mapping uuid="3266bfe3-6f08-48d1-9ae5-5150f735b144" name="redislocalhost Mapping">
+      <data-sources db="e40bc154-e221-459e-8d37-99a6e52c67d0" ddl="5e581c3b-0cc7-4e5a-918b-9df5521f8a26" />
+      <scope>
+        <node kind="database" negative="1" />
+      </scope>
+    </mapping>
+  </component>
+</project>

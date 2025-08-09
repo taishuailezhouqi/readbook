@@ -21,6 +21,17 @@ public class UserController {
     @Resource
     private UserService userService;
 
+
+    /**
+     * 退出登陆
+     */
+    @PostMapping("/logout")
+    public Response<?> logout() {
+        return Response.success();
+    }
+
+
+
     /**
      * 注册或登录
      */
