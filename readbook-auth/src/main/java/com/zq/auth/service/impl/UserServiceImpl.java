@@ -104,7 +104,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // 将该用户的角色 ID 存入 Redis 中
         List<Long> roles = Lists.newArrayList();
         roles.add(RoleConstants.COMMON_USER_ROLE_ID);
-        String userRolesKey = RedisKeyConstants.buildUserRoleKey(phone);
+        String userRolesKey = RedisKeyConstants.buildUserRoleKey(user.getId());
         redisTemplate.opsForValue().set(userRolesKey, JsonUtils.toJsonString(roles));
 
         return user.getId();

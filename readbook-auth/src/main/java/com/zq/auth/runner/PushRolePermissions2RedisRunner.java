@@ -61,23 +61,24 @@ public class PushRolePermissions2RedisRunner implements ApplicationRunner {
                             .eq(Permission::getType, 3));
                     Map<Long, Permission> permissionMap = permissions.stream().collect(Collectors.toMap(Permission::getId, permission -> permission));
                     // 组织 角色ID-权限 关系
-                    Map<Long, List<Permission>> roleIdPermissionMap = Maps.newHashMap();
+                    Map<String, List<String>> roleIdPermissionMap = Maps.newHashMap();
                     // 循环所有角色
                     roles.forEach(roleDO -> {
                         // 当前角色 ID
+                        String roleKey = roleDO.getRoleKey();
                         Long roleId = roleDO.getId();
                         // 当前角色 ID 对应的权限 ID 集合
                         List<Long> permissionIds = map.get(roleId);
                         if (CollUtil.isNotEmpty(permissionIds)) {
-                            List<Permission> perDOS = Lists.newArrayList();
+                            List<String> perDOS = Lists.newArrayList();
                             permissionIds.forEach(permissionId -> {
                                 // 根据权限 ID 获取具体的权限 DO 对象
                                 Permission permission = permissionMap.get(permissionId);
                                 if (Objects.nonNull(permission)) {
-                                    perDOS.add(permission);
+                                    perDOS.add(permission.getPermissionKey());
                                 }
                             });
-                            roleIdPermissionMap.put(roleId, perDOS);
+                            roleIdPermissionMap.put(roleKey, perDOS);
                         }
                     });
 
